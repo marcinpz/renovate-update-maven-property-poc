@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>renovate-update-maven-property-poc</artifactId>
+    <groupId>com.github.marcinpz</groupId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>POC for Renovate updates maven property</name>
+
+    <properties>
+        <mq.version>3.8</mq.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <executions>
+                    <execution>
+                        <id>start-modules</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${project.build.resources[0].directory}/script.sh</executable>
+                            <workingDirectory>${project.build.resources[0].directory}</workingDirectory>
+                            <environmentVariables>
+                                <MQ_VERSION>${mq.version}</MQ_VERSION>
+                            </environmentVariables>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
